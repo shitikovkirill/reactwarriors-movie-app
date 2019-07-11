@@ -8,7 +8,9 @@ export default class App extends React.Component {
 
     this.state = {
       filters: {
-        sort_by: "popularity.desc"
+        sort_by: "popularity.desc",
+        year: "",
+        genres: new Map(),
       },
       page: 1
     };
@@ -32,6 +34,16 @@ export default class App extends React.Component {
     });
   };
 
+  resetFilters = () => {
+    this.setState({
+      filters: {
+        sort_by: "popularity.desc",
+        year: "",
+        genres: new Map(),
+      },
+    });
+  };
+
   render() {
     const { filters, page } = this.state;
     return (
@@ -46,6 +58,7 @@ export default class App extends React.Component {
                   filters={filters}
                   onChangeFilters={this.onChangeFilters}
                   onChangePage={this.onChangePage}
+                  resetFilters={this.resetFilters}
                 />
               </div>
             </div>
