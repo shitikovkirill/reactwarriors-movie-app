@@ -10,7 +10,7 @@ export default class App extends React.Component {
       filters: {
         sort_by: "popularity.desc",
         year: "",
-        genres: new Map(),
+        genres: [],
       },
       page: 1
     };

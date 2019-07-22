@@ -6,7 +6,7 @@ import {API_KEY_3, API_URL} from "../../api/api";
 export default class GenreFilter extends React.Component {
 
     static propTypes = {
-        checkedItems: PropTypes.instanceOf(Map),
+        checkedItems: PropTypes.instanceOf(Array),
         onChangeFilters: PropTypes.func.isRequired
     };
 
@@ -37,11 +37,16 @@ export default class GenreFilter extends React.Component {
     }
 
     handleChange = (event) => {
-        const item = event.target.value;
+        const currentItem = event.target.value;
         const isChecked = event.target.checked;
 
-        let clone = new Map(this.props.checkedItems);
-        clone.set(item, isChecked);
+        let clone = [ ...this.props.checkedItems];
+
+        if (isChecked) {
+            clone.push(currentItem);
+        } else {
+            clone = clone.filter((item) => currentItem != item )
+        }
 
         this.props.onChangeFilters({
             target: {
@@ -50,6 +55,10 @@ export default class GenreFilter extends React.Component {
             }
         })
     };
+
+    isChecked (currentItem) {
+        return this.props.checkedItems.includes(String(currentItem));
+    }
 
     render() {
         return (
@@ -60,7 +69,7 @@ export default class GenreFilter extends React.Component {
                         <Checkbox
                             name={"genre"}
                             value={item.id}
-                            checked={this.props.checkedItems.get(""+item.id)}
+                            checked={this.isChecked(item.id)}
                             onChange={this.handleChange}
                         />
                         {item.name}

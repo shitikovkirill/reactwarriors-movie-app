@@ -19,9 +19,8 @@ export default class MovieList extends Component {
       link += `&year=${year}`
     }
 
-    let genres_keys = this.getGenresKeys(genres);
-    if (genres_keys.length) {
-      link += `&with_genres=${genres_keys.join()}`;
+    if (genres.length) {
+      link += `&with_genres=${genres.join()}`;
     }
 
     fetch(link)
@@ -34,17 +33,6 @@ export default class MovieList extends Component {
         });
       });
   };
-
-  getGenresKeys(genres){
-    let genres_keys = [];
-    let genres_all_keys = [ ...genres.keys() ];
-    genres_all_keys.forEach(function (item) {
-      if (genres.get(item)){
-        genres_keys.push(item)
-      }
-    });
-    return genres_keys;
-  }
 
   componentDidMount() {
     // const sort_by = this.props.filters.sort_by
