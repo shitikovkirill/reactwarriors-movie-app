@@ -18,7 +18,7 @@ export default class YearFilter extends React.Component {
     };
 
     render() {
-        const { year, onChangeFilters, options } = this.props;
+        const {year, onChangeFilters, options} = this.props;
         return (
             <div className="form-group">
                 <label htmlFor="year">Год выпуска:</label>

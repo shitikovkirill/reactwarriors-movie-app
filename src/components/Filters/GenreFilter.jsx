@@ -40,12 +40,12 @@ export default class GenreFilter extends React.Component {
         const currentItem = event.target.value;
         const isChecked = event.target.checked;
 
-        let clone = [ ...this.props.checkedItems];
+        let clone = [...this.props.checkedItems];
 
         if (isChecked) {
             clone.push(currentItem);
         } else {
-            clone = clone.filter((item) => currentItem != item )
+            clone = clone.filter((item) => currentItem != item)
         }
 
         this.props.onChangeFilters({
@@ -56,7 +56,7 @@ export default class GenreFilter extends React.Component {
         })
     };
 
-    isChecked (currentItem) {
+    isChecked(currentItem) {
         return this.props.checkedItems.includes(String(currentItem));
     }
 
