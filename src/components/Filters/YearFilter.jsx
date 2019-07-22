@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Range from "../Helpers/Range"
+import getYearList from "../Helpers/YearList"
 
-const startYear = 1940;
 
 export default class YearFilter extends React.Component {
 
@@ -15,7 +14,7 @@ export default class YearFilter extends React.Component {
     };
 
     static defaultProps = {
-        options: Range(new Date().getFullYear() - startYear, startYear)
+        options: getYearList()
     };
 
     render() {
