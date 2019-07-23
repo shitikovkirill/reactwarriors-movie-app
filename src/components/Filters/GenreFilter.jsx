@@ -1,5 +1,5 @@
 import React from "react";
-import Checkbox from "../Element/Checkbox";
+import Checkbox from "../Elements/Checkbox";
 import PropTypes from "prop-types";
 import {API_KEY_3, API_URL} from "../../api/api";
 
