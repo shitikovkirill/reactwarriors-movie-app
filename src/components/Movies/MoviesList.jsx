@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import MovieItem from "./MovieItem";
 import {API_URL, API_KEY_3} from "../../api/api";
+import _ from 'lodash';
 
 export default class MovieList extends Component {
     constructor() {
@@ -75,7 +76,9 @@ export default class MovieList extends Component {
 
     componentDidUpdate(prevProps) {
         console.log("componentDidUpdate", prevProps.page, this.props.page);
-        if (this.filtersWasChanged(prevProps)) {
+
+        if (prevProps.filters !== this.props.filters) {
+        //if (!_.isEqual(prevProps.filters, this.props.filters)) {
             this.props.onChangePage(1);
             this.getMovies(this.props.filters, 1);
         }
@@ -83,17 +86,6 @@ export default class MovieList extends Component {
         if (this.props.page !== prevProps.page) {
             this.getMovies(this.props.filters, this.props.page);
         }
-    }
-
-    filtersWasChanged(prevProps) {
-        let sort_by = this.props.filters.sort_by !== prevProps.filters.sort_by;
-        let year = this.props.filters.year && this.props.filters.year !== prevProps.filters.year;
-
-        let currentSelected = [...this.props.filters.genres].filter(item => item[1]);
-        let prevSelected = [...prevProps.filters.genres].filter(item => item[1]);
-        let genres = currentSelected.length !== prevSelected.length;
-
-        return sort_by || year || genres
     }
 
     render() {
