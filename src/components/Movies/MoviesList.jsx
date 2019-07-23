@@ -9,7 +9,8 @@ export default class MovieList extends Component {
         super();
 
         this.state = {
-            movies: []
+            movies: [],
+            isLoaded: true,
         };
     }
 
@@ -28,10 +29,11 @@ export default class MovieList extends Component {
         }
 
         if (genres.length) {
-            request.with_genres=genres;
+            request.with_genres = genres;
         }
 
         let link = `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
+        this.setState({isLoaded: true});
         fetch(link)
             .then(response => {
                 return response.json();
@@ -41,6 +43,9 @@ export default class MovieList extends Component {
                     movies: data.results
                 });
                 this.props.onChangePage(data['total_pages'], "total_page");
+            })
+            .then(() => {
+                this.setState({isLoaded: false});
             });
     };
 
@@ -52,7 +57,7 @@ export default class MovieList extends Component {
         console.log("componentDidUpdate", prevProps.page, this.props.page);
 
         if (prevProps.filters !== this.props.filters) {
-        //if (!_.isEqual(prevProps.filters, this.props.filters)) {
+            //if (!_.isEqual(prevProps.filters, this.props.filters)) {
             this.props.onChangePage(1);
             this.getMovies(this.props.filters, 1);
         }
@@ -63,16 +68,20 @@ export default class MovieList extends Component {
     }
 
     render() {
-        const {movies} = this.state;
+        const {movies, isLoaded} = this.state;
         return (
             <div className="row">
-                {movies.map(movie => {
-                    return (
-                        <div key={movie.id} className="col-6 mb-4">
-                            <MovieItem item={movie}/>
-                        </div>
-                    );
-                })}
+                {
+                    isLoaded ?
+                        <img src="/images/preloader.gif" className="preloader position-absolute"/> :
+                        movies.map(movie => {
+                            return (
+                                <div key={movie.id} className="col-6 mb-4">
+                                    <MovieItem item={movie}/>
+                                </div>
+                            );
+                        })
+                }
             </div>
         );
     }

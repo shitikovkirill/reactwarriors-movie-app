@@ -1,3 +1,8 @@
 body {
     background: #fdfdfd;
 }
+
+.preloader{
+    left:50%;
+    top:50px;
+}
