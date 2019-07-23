@@ -3,18 +3,21 @@ import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 
 export default class App extends React.Component {
+
+    initialState = {
+        filters: {
+            sort_by: "popularity.desc",
+            year: "",
+            genres: [],
+        },
+        page: 1,
+        total_page: null,
+    };
+
     constructor() {
         super();
 
-        this.state = {
-            filters: {
-                sort_by: "popularity.desc",
-                year: "",
-                genres: [],
-            },
-            page: 1,
-            total_page: null,
-        };
+        this.state = this.initialState;
     }
 
     onChangeFilters = event => {
@@ -38,13 +41,7 @@ export default class App extends React.Component {
     };
 
     resetFilters = () => {
-        this.setState({
-            filters: {
-                sort_by: "popularity.desc",
-                year: "",
-                genres: [],
-            },
-        });
+        this.setState(this.initialState);
     };
 
     render() {
