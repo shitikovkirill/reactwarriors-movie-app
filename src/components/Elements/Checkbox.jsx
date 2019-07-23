@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Checkbox = ({type = 'checkbox', name, value, checked = false, onChange}) => (
-    <input type={type} name={name} value={value} checked={checked} onChange={onChange}/>
+const Checkbox = ({type = 'checkbox', title, name, value, checked = false, onChange}) => (
+    <label key={value}>
+        <input type={type} name={name} value={value} checked={checked} onChange={onChange}/>
+        {title}
+    </label>
 );
 
 Checkbox.propTypes = {
