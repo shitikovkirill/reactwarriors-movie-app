@@ -37,12 +37,6 @@ export default class YearFilter extends React.Component {
                             {option.year}
                         </option>
                     ))}
-                    {/*
-          <option value="popularity.desc">Популярные по убыванию</option>
-          <option value="popularity.asc">Популярные по возростанию</option>
-          <option value="vote_average.desc">Рейтинг по убыванию</option>
-          <option value="vote_average.asc">Рейтинг по возростанию</option>
-          */}
                 </select>
             </div>
         );
