@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import MovieItem from "./MovieItem";
 import {API_URL, API_KEY_3} from "../../api/api";
 import _ from 'lodash';
+import queryString from "query-string";
 
 export default class MovieList extends Component {
     constructor() {
@@ -14,16 +15,23 @@ export default class MovieList extends Component {
 
     getMovies = (filters, page) => {
         const {sort_by, year, genres} = filters;
-        let link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}`;
+
+        const request = {
+            api_key: API_KEY_3,
+            language: "ru-RU",
+            sort_by,
+            page,
+        };
 
         if (year) {
-            link += `&year=${year}`
+            request.year = year
         }
 
         if (genres.length) {
-            link += `&with_genres=${genres.join()}`;
+            request.with_genres=genres;
         }
 
+        let link = `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
         fetch(link)
             .then(response => {
                 return response.json();
