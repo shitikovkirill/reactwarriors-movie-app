@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import getYearList from "../Helpers/YearList"
+import Select from "../Elements/Select";
 
 
 export default class YearFilter extends React.Component {
@@ -20,25 +21,14 @@ export default class YearFilter extends React.Component {
     render() {
         const {year, onChangeFilters, options} = this.props;
         return (
-            <div className="form-group">
-                <label htmlFor="year">Год выпуска:</label>
-                <select
-                    id="year"
-                    className="form-control"
-                    name="year"
-                    value={year}
-                    onChange={onChangeFilters}
-                >
-                    <option value="" disabled>
-                        Выбирете год
-                    </option>
-                    {options.map(option => (
-                        <option key={option.year} value={option.year}>
-                            {option.year}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <Select
+                id="year"
+                name="year"
+                value={year}
+                labelText="Год выпуска:"
+                options={options}
+                onChange={onChangeFilters}
+            />
         );
     }
 }
