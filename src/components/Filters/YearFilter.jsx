@@ -4,7 +4,7 @@ import getYearList from "../Helpers/YearList"
 import Select from "../Elements/Select";
 
 
-export default class YearFilter extends React.Component {
+export default class YearFilter extends React.PureComponent {
 
     static propTypes = {
         year: PropTypes.oneOfType([

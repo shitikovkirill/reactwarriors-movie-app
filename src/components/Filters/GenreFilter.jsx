@@ -66,6 +66,7 @@ export default class GenreFilter extends React.Component {
                 <p>Жанры:</p>
                 {this.state.genres.map(item => (
                     <Checkbox
+                        key={item.id}
                         title={item.name}
                         name={"genre"}
                         value={item.id}
