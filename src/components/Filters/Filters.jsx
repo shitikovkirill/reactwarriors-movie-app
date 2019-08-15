@@ -2,6 +2,8 @@ import React from "react";
 import SortBy from "./SortBy";
 import YearFilter from "./YearFilter";
 import GenreFilter from "./GenreFilter"
+import ControlButtons from "./ControlButtons";
+import PageCounter from "./PageCounter";
 
 export default class Filters extends React.Component {
     render() {
@@ -18,34 +20,8 @@ export default class Filters extends React.Component {
                 <SortBy sort_by={sort_by} onChangeFilters={onChangeFilters}/>
                 <YearFilter year={year} onChangeFilters={onChangeFilters}/>
                 <GenreFilter onChangeFilters={onChangeFilters} checkedItems={genres}/>
-                <div className="btn-group">
-                    <button
-                        type="button"
-                        className="btn btn-light"
-                        disabled={page === 1}
-                        onClick={onChangePage.bind(null, page - 1, "page")}
-                    >
-                        Назад
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-light"
-                        onClick={onChangePage.bind(null, page + 1, "page")}
-                        disabled={page >= totalPage}
-                    >
-                        Вперед
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-light"
-                        onClick={resetFilters}
-                    >
-                        Сбросить фильтры
-                    </button>
-                </div>
-                <div>
-                    {page} of {totalPage}
-                </div>
+                <ControlButtons page={page} onChangePage={onChangePage} totalPage={totalPage} resetFilters={resetFilters}/>
+                <PageCounter page={page} totalPage={totalPage}/>
             </form>
         );
     }

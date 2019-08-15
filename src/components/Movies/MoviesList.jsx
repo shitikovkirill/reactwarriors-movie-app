@@ -73,7 +73,7 @@ export default class MovieList extends Component {
             <div className="row">
                 {
                     isLoaded ?
-                        <img src="/images/preloader.gif" className="preloader position-absolute"/> :
+                        <img src="/images/preloader.gif" alt="" className="preloader position-absolute"/> :
                         movies.map(movie => {
                             return (
                                 <div key={movie.id} className="col-6 mb-4">
