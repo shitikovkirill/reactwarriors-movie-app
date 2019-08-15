@@ -10,8 +10,10 @@ export default class App extends React.Component {
             year: "",
             genres: [],
         },
-        page: 1,
-        total_page: null,
+        pagination: {
+            page: 1,
+            total_page: null,
+        },
     };
 
     constructor() {
@@ -31,13 +33,13 @@ export default class App extends React.Component {
         }));
     };
 
-    onChangePage = (page, fieldName = "page") => {
-        if (!["page", "total_page"].includes(fieldName)){
-            throw "Not correct field name in onChangePage function!";
-        }
-        this.setState({
-            [fieldName]: page
-        });
+    onChangePagination = (key, value) => {
+        this.setState(prevState => ({
+            pagination:{
+                ...prevState.pagination,
+                [key]: value
+            }
+        }));
     };
 
     resetFilters = () => {
@@ -45,7 +47,7 @@ export default class App extends React.Component {
     };
 
     render() {
-        const {filters, page, total_page} = this.state;
+        const {filters, pagination: {page, total_page}} = this.state;
         return (
             <div className="container">
                 <div className="row mt-4">
@@ -58,7 +60,7 @@ export default class App extends React.Component {
                                     totalPage={total_page}
                                     filters={filters}
                                     onChangeFilters={this.onChangeFilters}
-                                    onChangePage={this.onChangePage}
+                                    onChangePage={this.onChangePagination}
                                     resetFilters={this.resetFilters}
                                 />
                             </div>
@@ -68,7 +70,7 @@ export default class App extends React.Component {
                         <MoviesList
                             filters={filters}
                             page={page}
-                            onChangePage={this.onChangePage}
+                            onChangePage={this.onChangePagination}
                         />
                     </div>
                 </div>

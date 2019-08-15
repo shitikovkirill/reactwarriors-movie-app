@@ -42,7 +42,7 @@ export default class MovieList extends Component {
                 this.setState({
                     movies: data.results
                 });
-                this.props.onChangePage(data['total_pages'], "total_page");
+                this.props.onChangePage("total_page", data['total_pages']);
             })
             .then(() => {
                 this.setState({isLoaded: false});
@@ -58,7 +58,7 @@ export default class MovieList extends Component {
 
         if (prevProps.filters !== this.props.filters) {
             //if (!_.isEqual(prevProps.filters, this.props.filters)) {
-            this.props.onChangePage(1);
+            this.props.onChangePage("page", 1);
             this.getMovies(this.props.filters, 1);
         }
 

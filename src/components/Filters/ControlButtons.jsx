@@ -17,14 +17,14 @@ export default class ControlButtons extends React.Component {
                     type="button"
                     className="btn btn-light"
                     disabled={page === 1}
-                    onClick={onChangePage.bind(null, page - 1, "page")}
+                    onClick={onChangePage.bind(null,"page", page - 1)}
                 >
                     Назад
                 </button>
                 <button
                     type="button"
                     className="btn btn-light"
-                    onClick={onChangePage.bind(null, page + 1, "page")}
+                    onClick={onChangePage.bind(null, "page", page + 1)}
                     disabled={page >= totalPage}
                 >
                     Вперед
