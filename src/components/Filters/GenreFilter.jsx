@@ -40,17 +40,11 @@ export default class GenreFilter extends React.Component {
         const currentItem = event.target.value;
         const isChecked = event.target.checked;
 
-        let clone = [...this.props.checkedItems];
-
-        if (isChecked) {
-            clone.push(currentItem);
-        } else {
-            clone = clone.filter((item) => currentItem != item)
-        }
-
         this.props.onChangeFilters({
             target: {
-                value: clone,
+                value: isChecked
+                    ?  [...this.props.checkedItems, currentItem]
+                    : this.props.checkedItems.filter((item) => currentItem != item),
                 name: "genres",
             }
         })

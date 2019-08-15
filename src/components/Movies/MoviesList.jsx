@@ -15,6 +15,24 @@ export default class MovieList extends Component {
     }
 
     getMovies = (filters, page) => {
+        let link = this.getLinkByFilters(filters, page);
+        this.setState({isLoaded: true});
+        fetch(link)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                this.setState({
+                    movies: data.results
+                });
+                this.props.onChangePage("total_page", data.total_pages);
+            })
+            .then(() => {
+                this.setState({isLoaded: false});
+            });
+    };
+
+    getLinkByFilters(filters, page){
         const {sort_by, year, genres} = filters;
 
         const request = {
@@ -32,22 +50,8 @@ export default class MovieList extends Component {
             request.with_genres = genres;
         }
 
-        let link = `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
-        this.setState({isLoaded: true});
-        fetch(link)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    movies: data.results
-                });
-                this.props.onChangePage("total_page", data['total_pages']);
-            })
-            .then(() => {
-                this.setState({isLoaded: false});
-            });
-    };
+        return `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
+    }
 
     componentDidMount() {
         this.getMovies(this.props.filters, this.props.page);
