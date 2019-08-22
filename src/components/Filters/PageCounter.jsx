@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 export default class PageCounter extends React.Component {
     static propTypes = {
-        page: PropTypes.number.isRequired,
-        totalPage: PropTypes.number.isRequired,
+        page: PropTypes.number,
+        totalPage: PropTypes.number,
     };
 
     render() {

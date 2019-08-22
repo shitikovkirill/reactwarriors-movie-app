@@ -1,6 +1,7 @@
 import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
+import Header from "./Header/Header";
 
 export default class App extends React.Component {
 
@@ -35,7 +36,7 @@ export default class App extends React.Component {
 
     onChangePagination = (key, value) => {
         this.setState(prevState => ({
-            pagination:{
+            pagination: {
                 ...prevState.pagination,
                 [key]: value
             }
@@ -49,29 +50,32 @@ export default class App extends React.Component {
     render() {
         const {filters, pagination: {page, total_page}} = this.state;
         return (
-            <div className="container">
-                <div className="row mt-4">
-                    <div className="col-4">
-                        <div className="card" style={{width: "100%"}}>
-                            <div className="card-body">
-                                <h3>Фильтры:</h3>
-                                <Filters
-                                    page={page}
-                                    totalPage={total_page}
-                                    filters={filters}
-                                    onChangeFilters={this.onChangeFilters}
-                                    onChangePage={this.onChangePagination}
-                                    resetFilters={this.resetFilters}
-                                />
+            <div>
+                <Header/>
+                <div className="container">
+                    <div className="row mt-4">
+                        <div className="col-4">
+                            <div className="card" style={{width: "100%"}}>
+                                <div className="card-body">
+                                    <h3>Фильтры:</h3>
+                                    <Filters
+                                        page={page}
+                                        totalPage={total_page}
+                                        filters={filters}
+                                        onChangeFilters={this.onChangeFilters}
+                                        onChangePage={this.onChangePagination}
+                                        resetFilters={this.resetFilters}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-8">
-                        <MoviesList
-                            filters={filters}
-                            page={page}
-                            onChangePage={this.onChangePagination}
-                        />
+                        <div className="col-8">
+                            <MoviesList
+                                filters={filters}
+                                page={page}
+                                onChangePage={this.onChangePagination}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
