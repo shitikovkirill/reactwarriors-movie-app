@@ -60,16 +60,14 @@ export default class GenreFilter extends React.Component {
                 <p>Жанры:</p>
                 <ul className="list-group list-group-flush">
                     {this.state.genres.map(item => (
-                        <li className="list-group-item">
-                            <Checkbox
-                                key={item.id}
-                                title={item.name}
-                                name={"genre"}
-                                value={item.id}
-                                checked={this.isChecked(item.id)}
-                                onChange={this.handleChange}
-                            />
-                        </li>
+                        <Checkbox
+                            key={item.id}
+                            title={item.name}
+                            name={"genre"}
+                            value={item.id}
+                            checked={this.isChecked(item.id)}
+                            onChange={this.handleChange}
+                        />
                     ))}
                 </ul>
             </div>
