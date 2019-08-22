@@ -1,6 +1,7 @@
 import React from "react";
 import Checkbox from "../Elements/Checkbox";
 import PropTypes from "prop-types";
+import {ListGroup, ListGroupItem} from 'reactstrap';
 import {API_KEY_3, API_URL} from "../../api/api";
 
 export default class GenreFilter extends React.Component {
@@ -58,18 +59,19 @@ export default class GenreFilter extends React.Component {
         return (
             <div className="form-group">
                 <p>Жанры:</p>
-                <ul className="list-group list-group-flush">
+                <ListGroup>
                     {this.state.genres.map(item => (
-                        <Checkbox
-                            key={item.id}
-                            title={item.name}
-                            name={"genre"}
-                            value={item.id}
-                            checked={this.isChecked(item.id)}
-                            onChange={this.handleChange}
-                        />
+                        <ListGroupItem key={item.id}>
+                            <Checkbox
+                                title={item.name}
+                                name={"genre"}
+                                value={item.id}
+                                checked={this.isChecked(item.id)}
+                                onChange={this.handleChange}
+                            />
+                        </ListGroupItem>
                     ))}
-                </ul>
+                </ListGroup>
             </div>
         );
     }
