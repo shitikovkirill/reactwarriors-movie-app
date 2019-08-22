@@ -43,7 +43,7 @@ export default class GenreFilter extends React.Component {
         this.props.onChangeFilters({
             target: {
                 value: isChecked
-                    ?  [...this.props.checkedItems, currentItem]
+                    ? [...this.props.checkedItems, currentItem]
                     : this.props.checkedItems.filter((item) => currentItem != item),
                 name: "genres",
             }
@@ -58,16 +58,20 @@ export default class GenreFilter extends React.Component {
         return (
             <div className="form-group">
                 <p>Жанры:</p>
-                {this.state.genres.map(item => (
-                    <Checkbox
-                        key={item.id}
-                        title={item.name}
-                        name={"genre"}
-                        value={item.id}
-                        checked={this.isChecked(item.id)}
-                        onChange={this.handleChange}
-                    />
-                ))}
+                <ul className="list-group list-group-flush">
+                    {this.state.genres.map(item => (
+                        <li className="list-group-item">
+                            <Checkbox
+                                key={item.id}
+                                title={item.name}
+                                name={"genre"}
+                                value={item.id}
+                                checked={this.isChecked(item.id)}
+                                onChange={this.handleChange}
+                            />
+                        </li>
+                    ))}
+                </ul>
             </div>
         );
     }
