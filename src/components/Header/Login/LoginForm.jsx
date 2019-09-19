@@ -47,9 +47,8 @@ export default class LoginForm extends React.Component {
     };
 
     handleBlur = (event) => {
-        const errors = {};
         let name = event.target.name;
-        errors[name] = this.validateField(this.fieldValidationRules[name]);
+        let errors = this.validateField(name);
         if (Object.keys(errors).length > 0) {
             this.setState(prevState => ({
                 errors: {
@@ -61,18 +60,22 @@ export default class LoginForm extends React.Component {
     };
 
     validateFields = () => {
-        const errors = {};
+        let errors = {};
         for (let field in this.fieldValidationRules){
-            errors[field] = this.validateField(this.fieldValidationRules[field]);
+            errors = {
+                ...errors,
+                ...this.validateField(field)
+            }
         }
         return errors;
     };
 
-    validateField = (validator) => {
+    validateField = (field) => {
+        let validator = this.fieldValidationRules[field];
         if (validator.condition()){
-            return validator.message;
+            return {[field]: validator.message};
         }
-        return null
+        return {}
     };
 
     onSubmit = () => {
