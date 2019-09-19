@@ -3,6 +3,28 @@ import { API_URL, API_KEY_3 } from "../../../api/api";
 import fetchApi from "../../../api/request";
 
 export default class LoginForm extends React.Component {
+
+    formFieldsValidator = {
+        username: {
+            message: "Not empty",
+            condition: () => {
+                return this.state.username ===  ""
+            }
+        },
+        password: {
+            message: "Not empty",
+            condition: () => {
+                return this.state.password ===  ""
+            }
+        },
+        repeatPassword: {
+            message: "Password not confirm",
+            condition: () => {
+                return this.state.password !== this.state.repeatPassword
+            }
+        }
+    };
+
     state = {
         username: "",
         password: "",
@@ -24,9 +46,10 @@ export default class LoginForm extends React.Component {
         }));
     };
 
-    handleBlur = () => {
-        console.log("on blur");
-        const errors = this.validateFields();
+    handleBlur = (event) => {
+        const errors = {};
+        let name = event.target.name;
+        errors[name] = this.validateField(this.formFieldsValidator[name]);
         if (Object.keys(errors).length > 0) {
             this.setState(prevState => ({
                 errors: {
@@ -39,18 +62,17 @@ export default class LoginForm extends React.Component {
 
     validateFields = () => {
         const errors = {};
-
-        if (this.state.username === "") {
-            errors.username = "Not empty";
+        for (let field in this.formFieldsValidator){
+            errors[field] = this.validateField(this.formFieldsValidator[field]);
         }
-        if (this.state.password === "") {
-            errors.password = "Not empty";
-        }
-        if (this.state.password !== this.state.repeatPassword) {
-            errors.repeatPassword = "Password not confirm";
-        }
-
         return errors;
+    };
+
+    validateField = (validator) => {
+        if (validator.condition()){
+            return validator.message;
+        }
+        return null
     };
 
     onSubmit = () => {
