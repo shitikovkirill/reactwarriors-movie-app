@@ -4,7 +4,7 @@ import fetchApi from "../../../api/request";
 
 export default class LoginForm extends React.Component {
 
-    formFieldsValidator = {
+    fieldValidationRules = {
         username: {
             message: "Not empty",
             condition: () => {
@@ -49,7 +49,7 @@ export default class LoginForm extends React.Component {
     handleBlur = (event) => {
         const errors = {};
         let name = event.target.name;
-        errors[name] = this.validateField(this.formFieldsValidator[name]);
+        errors[name] = this.validateField(this.fieldValidationRules[name]);
         if (Object.keys(errors).length > 0) {
             this.setState(prevState => ({
                 errors: {
@@ -62,8 +62,8 @@ export default class LoginForm extends React.Component {
 
     validateFields = () => {
         const errors = {};
-        for (let field in this.formFieldsValidator){
-            errors[field] = this.validateField(this.formFieldsValidator[field]);
+        for (let field in this.fieldValidationRules){
+            errors[field] = this.validateField(this.fieldValidationRules[field]);
         }
         return errors;
     };
