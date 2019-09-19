@@ -171,12 +171,12 @@ export default class LoginForm extends React.Component {
                         )}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Пароль</label>
+                        <label htmlFor="password">Повторите пароль</label>
                         <input
                             type="password"
                             className="form-control"
                             id="repeatPassword"
-                            placeholder="Пароль"
+                            placeholder="Повторите пароль"
                             name="repeatPassword"
                             value={repeatPassword}
                             onChange={this.onChange}
