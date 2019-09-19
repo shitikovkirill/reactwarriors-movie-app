@@ -2,10 +2,17 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
+import { API_URL, API_KEY_3 } from "../api/api";
+import fetchApi from "../api/request";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 export default class App extends React.Component {
 
     initialState = {
+        user: null,
+        session_id: null,
         filters: {
             sort_by: "popularity.desc",
             year: "",
@@ -22,6 +29,22 @@ export default class App extends React.Component {
 
         this.state = this.initialState;
     }
+
+    updateUser = user => {
+        this.setState({
+            user
+        });
+    };
+
+    updateSessionId = session_id => {
+        cookies.set("session_id", session_id, {
+            path: "/",
+            maxAge: 2592000
+        });
+        this.setState({
+            session_id
+        });
+    };
 
     onChangeFilters = event => {
         const value = event.target.value;
@@ -47,11 +70,26 @@ export default class App extends React.Component {
         this.setState(this.initialState);
     };
 
+    componentDidMount() {
+        const session_id = cookies.get("session_id");
+        if (session_id) {
+            fetchApi(
+                `${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
+            ).then(user => {
+                this.updateUser(user);
+            });
+        }
+    }
+
     render() {
-        const {filters, pagination: {page, total_page}} = this.state;
+        const {filters, pagination: {page, total_page}, user} = this.state;
         return (
             <div>
-                <Header/>
+                <Header
+                    user={user}
+                    updateUser={this.updateUser}
+                    updateSessionId={this.updateSessionId}
+                />
                 <div className="container">
                     <div className="row mt-4">
                         <div className="col-4">
