@@ -1,92 +1,34 @@
-import React, {Component} from "react";
+import React from "react";
 import MovieItem from "./MovieItem";
-import {API_URL, API_KEY_3} from "../../api/api";
-import _ from 'lodash';
-import queryString from "query-string";
+import PropTypes from 'prop-types';
 
-export default class MovieList extends Component {
-    constructor() {
-        super();
 
-        this.state = {
-            movies: [],
-            isLoaded: true,
-        };
-    }
+const MoviesList = ({movies, isLoaded}) => {
+    return (
+        <div className="row">
+            {
+                isLoaded ?
+                    <img src="/images/preloader.gif" alt="" className="preloader position-absolute"/> :
+                    movies.map(movie => {
+                        return (
+                            <div key={movie.id} className="col-6 mb-4">
+                                <MovieItem item={movie}/>
+                            </div>
+                        );
+                    })
+            }
+        </div>
+    )
+};
 
-    getMovies = (filters, page) => {
-        let link = this.getLinkByFilters(filters, page);
-        this.setState({isLoaded: true});
-        fetch(link)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    movies: data.results
-                });
-                this.props.onChangePage("total_page", data.total_pages);
-            })
-            .then(() => {
-                this.setState({isLoaded: false});
-            });
-    };
+MoviesList.defaultProps = {
+    movies: [],
+    isLoaded: false
+};
 
-    getLinkByFilters(filters, page){
-        const {sort_by, year, genres} = filters;
+MoviesList.propTypes = {
+    movies: PropTypes.array.isRequired,
+    isLoaded: PropTypes.bool
+};
 
-        const request = {
-            api_key: API_KEY_3,
-            language: "ru-RU",
-            sort_by,
-            page,
-        };
-
-        if (year) {
-            request.year = year
-        }
-
-        if (genres.length) {
-            request.with_genres = genres;
-        }
-
-        return `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
-    }
-
-    componentDidMount() {
-        this.getMovies(this.props.filters, this.props.page);
-    }
-
-    componentDidUpdate(prevProps) {
-        console.log("componentDidUpdate", prevProps.page, this.props.page);
-
-        if (prevProps.filters !== this.props.filters) {
-            //if (!_.isEqual(prevProps.filters, this.props.filters)) {
-            this.props.onChangePage("page", 1);
-            this.getMovies(this.props.filters, 1);
-        }
-
-        if (this.props.page !== prevProps.page) {
-            this.getMovies(this.props.filters, this.props.page);
-        }
-    }
-
-    render() {
-        const {movies, isLoaded} = this.state;
-        return (
-            <div className="row">
-                {
-                    isLoaded ?
-                        <img src="/images/preloader.gif" alt="" className="preloader position-absolute"/> :
-                        movies.map(movie => {
-                            return (
-                                <div key={movie.id} className="col-6 mb-4">
-                                    <MovieItem item={movie}/>
-                                </div>
-                            );
-                        })
-                }
-            </div>
-        );
-    }
-}
+export default MoviesList;
