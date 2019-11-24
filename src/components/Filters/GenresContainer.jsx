@@ -56,7 +56,11 @@ export default class GenresContainer extends React.Component {
 
     render() {
         return (
-            <Genres genres={this.state.genres} isChecked={this.isChecked.bind(this)} handleChange={this.handleChange.bind(this)} />
+            <Genres
+                genres={this.state.genres}
+                isChecked={this.isChecked.bind(this)}
+                handleChange={this.handleChange.bind(this)}
+            />
         );
     }
 }

@@ -8,6 +8,8 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+export const AppContext = React.createContext();
+
 export default class App extends React.Component {
 
     initialState = {
@@ -82,13 +84,17 @@ export default class App extends React.Component {
     }
 
     render() {
-        const {filters, pagination: {page, total_page}, user} = this.state;
+        const {filters, pagination: {page, total_page}, user, session_id} = this.state;
         return (
-            <div>
+            <AppContext.Provider value={{
+                user,
+                updateUser: this.updateUser,
+                session_id,
+                updateSessionId: this.updateSessionId,
+            }}>
+                <div>
                 <Header
                     user={user}
-                    updateUser={this.updateUser}
-                    updateSessionId={this.updateSessionId}
                 />
                 <div className="container">
                     <div className="row mt-4">
@@ -117,6 +123,7 @@ export default class App extends React.Component {
                     </div>
                 </div>
             </div>
+            </AppContext.Provider>
         );
     }
 }

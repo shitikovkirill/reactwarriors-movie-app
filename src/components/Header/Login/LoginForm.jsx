@@ -1,8 +1,10 @@
 import React from "react";
 import { API_URL, API_KEY_3 } from "../../../api/api";
 import fetchApi from "../../../api/request";
+import { AppContext } from "../../App";
+import UserContainer from "../User";
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
 
     fieldValidationRules = {
         username: {
@@ -119,7 +121,7 @@ export default class LoginForm extends React.Component {
                 this.props.updateSessionId(data.session_id);
                 return fetchApi(
                     `${API_URL}/account?api_key=${API_KEY_3}&session_id=${
-                        data.session_id
+                        this.props.session_id
                         }`
                 );
             })
@@ -227,3 +229,16 @@ export default class LoginForm extends React.Component {
         );
     }
 }
+
+const LoginFormContainer = (props) => {
+    return <AppContext.Consumer>
+        {(context) => <LoginForm
+            updateUser={context.updateUser}
+            session_id={context.session_id}
+            updateSessionId={context.updateSessionId}
+            {...props}
+        />}
+    </AppContext.Consumer>
+};
+
+export default LoginFormContainer
