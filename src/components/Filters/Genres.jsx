@@ -1,6 +1,7 @@
 import React from "react";
 import Checkbox from "../Elements/Checkbox";
 import {ListGroup, ListGroupItem} from 'reactstrap';
+import GenresHOC from "./GenresHOC";
 
 const Genres = ({genres, isChecked, handleChange}) => {
         return (
@@ -23,4 +24,4 @@ const Genres = ({genres, isChecked, handleChange}) => {
         );
 };
 
-export default Genres
+export default GenresHOC(Genres);

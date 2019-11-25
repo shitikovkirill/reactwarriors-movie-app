@@ -1,7 +1,7 @@
 import React from "react";
 import SortBy from "./SortBy";
 import YearFilter from "./YearFilter";
-import Genres from "./GenresContainer"
+import Genres from "./Genres"
 import ControlButtons from "./ControlButtons";
 import PageCounter from "./PageCounter";
 

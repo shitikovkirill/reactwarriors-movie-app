@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {API_KEY_3, API_URL} from "../../api/api";
 import Genres from "./Genres";
 
-export default class GenresContainer extends React.Component {
+export default (GenresComponent) => class GenresHOC extends React.Component {
 
     static propTypes = {
         checkedItems: PropTypes.instanceOf(Array),
@@ -56,7 +56,7 @@ export default class GenresContainer extends React.Component {
 
     render() {
         return (
-            <Genres
+            <GenresComponent
                 genres={this.state.genres}
                 isChecked={this.isChecked.bind(this)}
                 handleChange={this.handleChange.bind(this)}
