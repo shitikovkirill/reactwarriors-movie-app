@@ -1,7 +1,6 @@
 import React from "react";
-import { API_URL, API_KEY_3 } from "../../../api/api";
-import fetchApi from "../../../api/request";
-import { AppContextHOC } from '../../HOC/AppContextHOC';
+import CallApi from "../../../api/request";
+import {AppContextHOC} from '../../HOC/AppContextHOC';
 
 
 class LoginForm extends React.Component {
@@ -10,13 +9,13 @@ class LoginForm extends React.Component {
         username: {
             message: "Not empty",
             condition: () => {
-                return this.state.username ===  ""
+                return this.state.username === ""
             }
         },
         password: {
             message: "Not empty",
             condition: () => {
-                return this.state.password ===  ""
+                return this.state.password === ""
             }
         },
         repeatPassword: {
@@ -63,7 +62,7 @@ class LoginForm extends React.Component {
 
     validateFields = () => {
         let errors = {};
-        for (let field in this.fieldValidationRules){
+        for (let field in this.fieldValidationRules) {
             errors = {
                 ...errors,
                 ...this.validateField(field)
@@ -74,7 +73,7 @@ class LoginForm extends React.Component {
 
     validateField = (field) => {
         let validator = this.fieldValidationRules[field];
-        if (validator.condition()){
+        if (validator.condition()) {
             return {[field]: validator.message};
         }
         return {}
@@ -84,46 +83,30 @@ class LoginForm extends React.Component {
         this.setState({
             submitting: true
         });
-        fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+        CallApi.get('/authentication/token/new')
             .then(data => {
-                return fetchApi(
-                    `${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-                    {
-                        method: "POST",
-                        mode: "cors",
-                        headers: {
-                            "Content-type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            username: this.state.username,
-                            password: this.state.password,
-                            request_token: data.request_token
-                        })
+                return CallApi.post('/authentication/token/validate_with_login', {
+                    body: {
+                        username: this.state.username,
+                        password: this.state.password,
+                        request_token: data.request_token
                     }
-                );
+                })
             })
             .then(data => {
-                return fetchApi(
-                    `${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-                    {
-                        method: "POST",
-                        mode: "cors",
-                        headers: {
-                            "Content-type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            request_token: data.request_token
-                        })
+                return CallApi.post('/authentication/session/new', {
+                    body: {
+                        request_token: data.request_token
                     }
-                );
+                });
             })
             .then(data => {
                 this.props.updateSessionId(data.session_id);
-                return fetchApi(
-                    `${API_URL}/account?api_key=${API_KEY_3}&session_id=${
-                        this.props.session_id
-                        }`
-                );
+                return CallApi.get('/account', {
+                    params: {
+                        session_id: this.props.session_id
+                    }
+                });
             })
             .then(user => {
                 this.props.updateUser(user);
@@ -158,7 +141,7 @@ class LoginForm extends React.Component {
     };
 
     render() {
-        const { username, password, repeatPassword, errors, submitting } = this.state;
+        const {username, password, repeatPassword, errors, submitting} = this.state;
         return (
             <div className="form-login-container">
                 <form className="form-login">

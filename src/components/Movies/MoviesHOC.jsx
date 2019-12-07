@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import {API_URL, API_KEY_3} from "../../api/api";
-import queryString from "query-string";
+import CallApi from "../../api/request";
 
 export default (MoviesComponent) => class MoviesHOC extends Component {
     constructor() {
@@ -13,12 +12,10 @@ export default (MoviesComponent) => class MoviesHOC extends Component {
     }
 
     getMovies = (filters, page) => {
-        let link = this.getLinkByFilters(filters, page);
         this.setState({isLoaded: true});
-        fetch(link)
-            .then(response => {
-                return response.json();
-            })
+        CallApi.get('/discover/movie', {
+            params: this.getParamsByFilters(filters, page)
+        })
             .then(data => {
                 this.setState({
                     movies: data.results
@@ -30,11 +27,10 @@ export default (MoviesComponent) => class MoviesHOC extends Component {
             });
     };
 
-    getLinkByFilters(filters, page){
+    getParamsByFilters(filters, page){
         const {sort_by, year, genres} = filters;
 
         const request = {
-            api_key: API_KEY_3,
             language: "ru-RU",
             sort_by,
             page,
@@ -48,7 +44,7 @@ export default (MoviesComponent) => class MoviesHOC extends Component {
             request.with_genres = genres;
         }
 
-        return `${API_URL}/discover/movie?${queryString.stringify(request, {arrayFormat: 'comma'})}`;
+        return request;
     }
 
     componentDidMount() {

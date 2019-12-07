@@ -6,8 +6,7 @@ import {
     DropdownItem
 } from "reactstrap";
 import {AppContextHOC} from "../HOC/AppContextHOC";
-import { API_URL, API_KEY_3 } from "../../api/api";
-import fetchApi from "../../api/request";
+import CallApi from "../../api/request";
 
 class User extends Component {
     state = {
@@ -21,16 +20,12 @@ class User extends Component {
     };
 
     handleLogOut = () => {
-        fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
-            method: "DELETE",
-            mode: "cors",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
+        CallApi.delete('/authentication/session', {
+            body: {
                 session_id: this.props.session_id
-            })
-        }).then(() => {
+            }
+        })
+        .then(() => {
             this.props.onLogOut();
         });
     };
