@@ -31,7 +31,6 @@ export default (MoviesComponent) => class MoviesHOC extends Component {
         const {sort_by, year, genres} = filters;
 
         const request = {
-            language: "ru-RU",
             sort_by,
             page,
         };

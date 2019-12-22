@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {API_KEY_3, API_URL} from "../../api/api";
-import Genres from "./Genres";
+import CallApi from "../../api/request";
 
 export default (GenresComponent) => class GenresHOC extends React.Component {
 
@@ -23,17 +22,12 @@ export default (GenresComponent) => class GenresHOC extends React.Component {
     }
 
     getGenres() {
-        let link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`;
-
-        fetch(link)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    genres: data.genres
-                });
+        CallApi.get('/genre/movie/list')
+        .then(data => {
+            this.setState({
+                genres: data.genres
             });
+        });
     }
 
     handleChange = (event) => {
@@ -44,7 +38,7 @@ export default (GenresComponent) => class GenresHOC extends React.Component {
             target: {
                 value: isChecked
                     ? [...this.props.checkedItems, currentItem]
-                    : this.props.checkedItems.filter((item) => currentItem != item),
+                    : this.props.checkedItems.filter((item) => currentItem !== item),
                 name: "genres",
             }
         })
