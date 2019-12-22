@@ -20,8 +20,12 @@ export default (ActionComponent) => class MovieAction extends Component {
     }
 
     switchSelect = () => {
+        const {action_type, media_id, session_id, user, toggleLoginForm} = this.props;
+        if (!session_id) {
+            toggleLoginForm();
+            return;
+        }
         this.setState({isLoading: true,});
-        const {action_type, media_id, session_id, user,} = this.props;
         const {selected} = this.state;
         let url = `/account/${user.id}/${action_type}`;
 

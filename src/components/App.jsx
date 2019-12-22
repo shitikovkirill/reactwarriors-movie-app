@@ -23,6 +23,7 @@ export default class App extends React.Component {
             page: 1,
             total_page: null,
         },
+        showLoginForm: false
     };
 
     constructor() {
@@ -96,15 +97,23 @@ export default class App extends React.Component {
         }
     }
 
+    toggleLoginForm = () => {
+        this.setState(prevState => ({
+            showLoginForm: !prevState.showLoginForm
+        }));
+    };
+
     render() {
-        const {filters, pagination: {page, total_page}, user, session_id} = this.state;
+        const {filters, pagination: {page, total_page}, user, session_id, showLoginForm} = this.state;
         return (
             <AppContext.Provider value={{
                 user,
                 updateUser: this.updateUser,
                 session_id,
                 updateSessionId: this.updateSessionId,
-                onLogOut: this.onLogOut
+                onLogOut: this.onLogOut,
+                showLoginForm,
+                toggleLoginForm: this.toggleLoginForm
             }}>
                 <div>
                 <Header
