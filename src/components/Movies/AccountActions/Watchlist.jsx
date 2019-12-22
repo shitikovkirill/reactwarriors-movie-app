@@ -4,8 +4,12 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import ActionHOC from './ActionHOC';
 import {AppContextHOC} from "../../HOC/AppContextHOC";
 
-function Watchlist({selected=false, switchSelect}) {
+function Watchlist({selected, switchSelect}) {
     return selected ? <BookmarkIcon onClick={switchSelect}/> : <BookmarkBorderIcon onClick={switchSelect}/>
 }
+
+Watchlist.defaultProps = {
+    selected: false
+};
 
 export default AppContextHOC(ActionHOC(Watchlist))
