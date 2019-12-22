@@ -5,7 +5,7 @@ import CallApi from "../../api/request";
 export default (GenresComponent) => class GenresHOC extends React.Component {
 
     static propTypes = {
-        checkedItems: PropTypes.instanceOf(Array),
+        checkedItems: PropTypes.array,
         onChangeFilters: PropTypes.func.isRequired
     };
 
