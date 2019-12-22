@@ -10,18 +10,13 @@ export default (ActionComponent) => class MovieAction extends Component {
         media_id: PropTypes.number.isRequired,
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             isLoading: false,
-            selected: false,
+            selected: props.selected,
         };
-    }
-
-    componentDidMount() {
-        let {selected = false} = this.props;
-        this.setState({selected})
     }
 
     switchSelect = () => {
