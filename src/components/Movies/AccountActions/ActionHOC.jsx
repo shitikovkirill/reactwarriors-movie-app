@@ -6,7 +6,7 @@ export default (ActionComponent) => class ActionHOC extends Component {
 
     static propTypes = {
         selected: PropTypes.bool,
-        action: PropTypes.string.isRequired,
+        action_type: PropTypes.string.isRequired,
         media_id: PropTypes.number.isRequired,
     };
 
@@ -26,9 +26,9 @@ export default (ActionComponent) => class ActionHOC extends Component {
 
     switchSelect = () => {
         this.setState({isLoading: true,});
-        const {action, media_id, session_id, user,} = this.props;
+        const {action_type, media_id, session_id, user,} = this.props;
         const {selected} = this.state;
-        let url = `/account/${user.id}/${action}`;
+        let url = `/account/${user.id}/${action_type}`;
 
         const params = {
             session_id
@@ -36,7 +36,7 @@ export default (ActionComponent) => class ActionHOC extends Component {
         const body = {
             media_type: 'movie',
             media_id,
-            [action]: !selected
+            [action_type]: !selected
         };
         CallApi.post(url, {
             params,
