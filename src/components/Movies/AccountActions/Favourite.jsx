@@ -5,9 +5,7 @@ import ActionHOC from './ActionHOC';
 import {AppContextHOC} from "../../HOC/AppContextHOC";
 
 function Favourite({selected=false, switchSelect}) {
-    return <>
-        {selected ? <StarIcon onClick={switchSelect}/> : <StarBorderIcon onClick={switchSelect}/>}
-    </>
+    return selected ? <StarIcon onClick={switchSelect}/> : <StarBorderIcon onClick={switchSelect}/>
 }
 
 export default AppContextHOC(ActionHOC(Favourite))
