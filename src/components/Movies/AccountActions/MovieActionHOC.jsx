@@ -53,12 +53,9 @@ export default (ActionComponent) => class MovieAction extends Component {
 
     render() {
         const {selected, isLoading} = this.state;
-        return (
-            <>
-                {isLoading ? "Loading..." : <ActionComponent
-                    selected={selected}
-                    switchSelect={this.switchSelect}/>}
-            </>
-        );
+        return <ActionComponent
+            disable={isLoading}
+            selected={selected}
+            switchSelect={this.switchSelect}/>
     }
 }
