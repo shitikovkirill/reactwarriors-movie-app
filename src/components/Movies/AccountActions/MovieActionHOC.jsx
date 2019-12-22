@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import CallApi from "../../../api/request";
 import PropTypes from "prop-types";
 
-export default (ActionComponent) => class ActionHOC extends Component {
+export default (ActionComponent) => class MovieAction extends Component {
 
     static propTypes = {
         selected: PropTypes.bool,
